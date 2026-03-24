@@ -2,6 +2,19 @@
 
 _Revise seu trabalho e finalize o exercício_ ✅
 
+## Teoria: Code Review com contexto de Design
+
+Quando trabalhamos com **design systems**, o code review ganha uma dimensão extra: além de verificar se o código está correto, precisamos validar se ele **reflete o design**.
+
+No seu PR, isso significa checar:
+- As cores hardcoded foram substituídas por variáveis `var(--sds-*)`?
+- O visual está consistente com o que o `get_design_context` mostrou?
+- A funcionalidade original foi preservada?
+
+Esse é o mesmo fluxo que equipes profissionais usam quando integram design systems — o design é a **fonte de verdade**, e o código precisa estar alinhado.
+
+---
+
 ## Atividade
 
 ### 4.1 — Revisar o Pull Request

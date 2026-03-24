@@ -110,14 +110,6 @@ Depois de abrir o PR, o workflow do exercício vai verificar:
 - ✅ O CSS contém referências a design tokens (`--sds-color`)
 
 Quando a validação passar, as instruções do **Step 4** aparecerão automaticamente na issue do exercício.
-5. Clique em **Create pull request**
-
----
-
-## Validação
-
-Depois de abrir o PR, o workflow do exercício vai verificar:
-- ✅ Existem mudanças na pasta `src/`
 - ✅ O arquivo `src/components/Header.tsx` existe
 - ✅ O arquivo `src/components/Hero.tsx` existe
 
