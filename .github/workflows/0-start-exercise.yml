@@ -14,6 +14,6 @@ jobs:
     name: Start Exercise
     uses: skills/exercise-toolkit/.github/workflows/start-exercise.yml@v0.9.1
     with:
-      exercise-title: "Figma MCP + GitHub Copilot: Construa uma Landing Page"
-      exercise-description: "Aprenda a usar o Figma MCP com GitHub Copilot para transformar designs em código React."
+      exercise-title: "Integrate Figma MCP with GitHub Copilot"
+      exercise-description: "Aprenda a usar o Figma MCP com GitHub Copilot para redesenhar um site com base num Design System profissional."
       exercise-url: ${{ github.server_url }}/${{ github.repository }}

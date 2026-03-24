@@ -1,4 +1,4 @@
-name: Step 3 - Construir Landing Page
+name: Step 3 - Redesenhar Mergington
 
 on:
   pull_request:
@@ -16,27 +16,23 @@ jobs:
     name: Find Exercise Issue
     uses: skills/exercise-toolkit/.github/workflows/find-exercise-issue.yml@v0.9.1
 
-  check_components:
-    name: Check React components
+  check_redesign:
+    name: Check redesign with design tokens
     needs: [find_exercise]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR
         uses: actions/checkout@v6
 
-      - name: Check Header.tsx exists
-        uses: skills/exercise-toolkit/actions/file-exists@v0.9.1
+      - name: Check styles.css contains design tokens
+        uses: skills/action-keyphrase-checker@v1
         with:
-          file: src/components/Header.tsx
-
-      - name: Check Hero.tsx exists
-        uses: skills/exercise-toolkit/actions/file-exists@v0.9.1
-        with:
-          file: src/components/Hero.tsx
+          file: src/static/styles.css
+          keyphrase: "--sds-color"
 
   post_next_step:
     name: Post Step 4 Instructions
-    needs: [find_exercise, check_components]
+    needs: [find_exercise, check_redesign]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -56,6 +52,6 @@ jobs:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Disable current workflow
-        run: gh workflow disable "Step 3 - Construir Landing Page" --repo "${{ github.repository }}"
+        run: gh workflow disable "Step 3 - Redesenhar Mergington" --repo "${{ github.repository }}"
       - name: Enable next workflow
         run: gh workflow enable "Step 4 - Revisar e Publicar" --repo "${{ github.repository }}"

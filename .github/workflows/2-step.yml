@@ -81,4 +81,4 @@ jobs:
       - name: Disable current workflow
         run: gh workflow disable "Step 2 - Extrair Design Tokens" --repo "${{ github.repository }}"
       - name: Enable next workflow
-        run: gh workflow enable "Step 3 - Construir Landing Page" --repo "${{ github.repository }}"
+        run: gh workflow enable "Step 3 - Redesenhar Mergington" --repo "${{ github.repository }}"

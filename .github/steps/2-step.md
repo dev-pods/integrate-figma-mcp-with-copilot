@@ -1,12 +1,22 @@
 # Step 2: Extrair Design Tokens
 
-_Use o Copilot + Figma MCP para transformar variáveis de design em CSS_ 🎨
+_Use `get_variable_defs` para transformar variáveis do Figma em CSS_ 🎨
 
 ## Teoria: O que são Design Tokens?
 
 **Design tokens** são os valores fundamentais de um design system — cores, tipografia, espaçamento, bordas. Eles são a "fonte única de verdade" que conecta design e código.
 
-No Figma, esses valores são armazenados como **variáveis** (Variables). Com o Figma MCP, podemos extraí-los automaticamente e transformá-los em **CSS Custom Properties** (variáveis CSS):
+No Figma, esses valores são armazenados como **variáveis** (Variables). O Figma MCP expõe a ferramenta `get_variable_defs`, que extrai todas as variáveis de um arquivo de uma vez.
+
+O plano é simples:
+
+```mermaid
+graph LR
+    Figma["🎨 Simple Design System"] -->|get_variable_defs| Tokens["📄 design-tokens.css"]
+    Tokens -->|CSS Custom Properties| Site["🌐 Mergington Site"]
+```
+
+Vamos transformar essas variáveis em **CSS Custom Properties** que depois serão aplicadas no site do Mergington:
 
 ```css
 /* Variáveis do Figma → CSS Custom Properties */
@@ -17,32 +27,34 @@ No Figma, esses valores são armazenados como **variáveis** (Variables). Com o 
 }
 ```
 
-Isso garante que o código sempre reflita o design — sem copiar valores manualmente.
-
 ---
 
 ## Atividade
 
-### 2.1 — Extrair variáveis do Figma via Copilot
+### 2.1 — Extrair variáveis do Figma com `get_variable_defs`
 
 1. Abra o **Copilot Agent Mode**
 2. Use o seguinte prompt (substituindo `SEU_FILE_KEY` pelo file key que você copiou no Step 1):
 
    ```
-   Acesse o arquivo Figma com file key SEU_FILE_KEY usando o MCP.
-   Use get_variable_defs para extrair todas as variáveis de design.
-   Crie o arquivo src/tokens/design-tokens.css com CSS Custom Properties
-   dentro de :root, usando os nomes e valores das variáveis do Figma.
+   Use the Figma MCP tool get_variable_defs to extract all design variables
+   from my Figma file with key SEU_FILE_KEY.
+
+   Then create the file src/tokens/design-tokens.css with all the variables
+   as CSS Custom Properties inside a :root selector.
+   Use the variable names from Figma as the CSS property names.
    ```
 
 3. O Copilot vai:
-   - Conectar ao Figma via MCP
-   - Ler as variáveis do Simple Design System
-   - Gerar o arquivo CSS com todas as custom properties
+   - Chamar `get_variable_defs` no Figma via MCP
+   - Receber todas as variáveis do Simple Design System (cores, tipografia, etc.)
+   - Gerar o arquivo CSS com as custom properties
 
-### 2.2 — Verificar os tokens
+> 💡 **O que aconteceu?** A ferramenta `get_variable_defs` retorna a lista completa de variáveis definidas no arquivo Figma — nomes, valores e coleções. O Copilot então as transforma no formato CSS que precisamos.
 
-O arquivo `src/tokens/design-tokens.css` deve conter variáveis como:
+### 2.2 — Verificar os tokens gerados
+
+Abra o arquivo `src/tokens/design-tokens.css` e verifique se ele contém variáveis como:
 
 ```css
 :root {
@@ -50,14 +62,10 @@ O arquivo `src/tokens/design-tokens.css` deve conter variáveis como:
   --sds-color-background-default-default: #ffffff;
   --sds-color-background-default-secondary: #f5f5f5;
   --sds-color-background-brand-default: #2c2c2c;
-  --sds-color-background-brand-tertiary: #f5f5f5;
-  --sds-color-background-neutral-tertiary: #e3e3e3;
 
   /* Text */
   --sds-color-text-default-default: #1e1e1e;
   --sds-color-text-default-secondary: #757575;
-  --sds-color-text-default-tertiary: #b3b3b3;
-  --sds-color-text-brand-on-brand: #f5f5f5;
 
   /* Borders */
   --sds-color-border-default-default: #d9d9d9;
@@ -73,7 +81,7 @@ O arquivo `src/tokens/design-tokens.css` deve conter variáveis como:
 
 ```bash
 git add src/tokens/design-tokens.css
-git commit -m "feat: extract design tokens from Figma"
+git commit -m "feat: extract design tokens from Figma via MCP"
 git push origin main
 ```
 

@@ -1,27 +1,28 @@
-# Step 1: Configurar Figma + MCP
+# Step 1: Configurar Figma MCP
 
 _Conecte o GitHub Copilot ao Figma usando o protocolo MCP_ ⚡
 
-## Teoria: O que é MCP?
+## Teoria: O que é o Figma MCP?
 
-O **Model Context Protocol (MCP)** é um padrão aberto que conecta assistentes de IA a ferramentas externas. Pense nele como um **"USB-C para IA"** — uma interface universal que permite ao Copilot acessar dados de qualquer serviço compatível.
+No exercício anterior, você usou o **GitHub MCP** para conectar o Copilot ao GitHub. Agora vamos conectá-lo ao **Figma** — a ferramenta de design mais popular do mercado.
 
+O **Figma MCP** expõe diversas ferramentas que o Copilot pode chamar:
+
+| Ferramenta | O que faz |
+|-----------|----------|
+| `whoami` | Verifica a conexão e retorna seu usuário Figma |
+| `get_variable_defs` | Extrai variáveis (cores, tipografia, espaçamento) de um arquivo |
+| `get_design_context` | Retorna screenshot + metadados estruturados de um componente/página |
+| `get_metadata` | Retorna informações gerais sobre um arquivo Figma |
+
+```mermaid
+graph LR
+    Copilot["🤖 GitHub Copilot"] <-->|MCP Protocol| Figma["🎨 Figma Design"]
+    Figma -->|Variáveis\nScreenshots\nMetadados| Copilot
+    Copilot --> Code["💅 CSS atualizado\ncom Design Tokens"]
 ```
-┌─────────────┐      MCP       ┌─────────────┐
-│   GitHub     │◄──────────────►│   Figma      │
-│   Copilot    │   (protocolo)  │   Design     │
-└─────────────┘                 └─────────────┘
-      │
-      ▼
-  Código gerado
-  com contexto
-  do design
-```
 
-Com o **Figma MCP**, o Copilot pode:
-- Ler componentes, estilos e variáveis diretamente do Figma
-- Traduzir designs em código com precisão
-- Acessar design tokens (cores, tipografia, espaçamento)
+Neste exercício, vamos usar essas ferramentas para **redesenhar o site do Mergington High School** com base no **Simple Design System** do Figma.
 
 ---
 
@@ -49,7 +50,7 @@ O **Simple Design System** é um design system oficial da Figma, ideal para apre
                                  ▲ este é o seu file key
    ```
 
-5. **Guarde este file key** — você vai precisar dele no Step 2
+5. **Guarde este file key** — você vai precisar dele nos próximos steps
 
 ### 1.3 — Gerar um Personal Access Token no Figma
 
@@ -100,15 +101,19 @@ O repositório já inclui um template de configuração MCP. Você só precisa a
 
    > O `${input:figma-token}` faz o VS Code solicitar seu token automaticamente quando o Copilot usar o MCP pela primeira vez.
 
-### 1.5 — Testar a conexão
+### 1.5 — Testar a conexão com `whoami`
 
-1. Abra o **Copilot Agent Mode** (ícone do Copilot na barra lateral → Agent)
+Hora de testar! Abra o **Copilot Agent Mode** e use a primeira ferramenta do Figma MCP:
+
+1. Abra o Copilot Chat (ícone do Copilot na barra lateral → Agent)
 2. Digite no chat:
    ```
-   Use o Figma MCP para verificar minha conexão com whoami
+   Use the Figma MCP whoami tool to verify my connection
    ```
 3. O VS Code vai pedir seu **Figma Personal Access Token** — cole o token que você gerou
 4. Se a conexão funcionar, o Copilot vai retornar seu nome de usuário/email do Figma
+
+> 💡 **O que aconteceu?** O Copilot chamou a ferramenta `whoami` do Figma MCP. Essa é a forma mais simples de validar que a conexão está funcionando antes de usar ferramentas mais avançadas.
 
 ### 1.6 — Fazer commit e push
 
