@@ -7,7 +7,9 @@ dist/
 # Editor
 .vscode/*
 !.vscode/settings.json
+!.vscode/launch.json
 !.vscode/mcp.json.example
+!.vscode/mcp.json
 
 # Environment
 .env
